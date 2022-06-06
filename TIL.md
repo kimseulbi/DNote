@@ -77,3 +77,11 @@ pip freeze > requirements.txt
 ```
 deactivate
 ```
+
+### SASS
+
+스타일시트 언어이다.
+
+CSS 파일을 작성한다면 전혀 쓸 수 없었던 것을 Sass 문법을 통해 구현
+
+브라우저 중간에 껴서 일을 해주는 게 CSS 전처리기, Sass의 역할

@@ -78,10 +78,106 @@ pip freeze > requirements.txt
 deactivate
 ```
 
-### SASS
+## SASS
 
 스타일시트 언어이다.
 
 CSS 파일을 작성한다면 전혀 쓸 수 없었던 것을 Sass 문법을 통해 구현
 
 브라우저 중간에 껴서 일을 해주는 게 CSS 전처리기, Sass의 역할
+
+## 리액트
+
+### export default vs export
+
+export default는 해당 모듈엔 대체가 하나만 있다, 하나만 내보낼때 사용, 개발자가 원하는 이름으로 import 할수 있다.
+
+export 배열, 상수, 클래스등 다수를 내보낼수 있다.
+named export
+
+## 리덕스
+
+리덕스는 글로벌하게 상태관리를 할수있게 도와주는 도구
+
+- `Action`
+
+  - 상태에 어떠한 변화에 필요한것, 하나의 객체
+
+- `액션 생성함수`
+
+  - 액션을 만드는 함수
+
+- `리듀서`
+
+  - 상태의 변화를 일으키는 함수
+
+- `스토어`
+
+  - 리덕스에서는 한 App당 하나의 스토어
+  - 스토어 안에 현재의 앱상태, 리듀서 포함, 내장함수 포함
+
+- `디스패치`
+
+  - 스토어의 내장함수 중 하나
+  - 액션을 발생 시키는것
+
+- `구독`
+
+  - 스토어의 내장 함수 중 하나
+  - `subscribe`: 특정 함수를 전달해주면, 액션이 디스패치 되었을때 마다 전달해준 함수가 호출
+  - `connect`, `useSelector`: Hook을 사용하여 리덕스 스토어의 상태에 구독
+
+- `createStore`
+
+  - 스토어를 만들어주는 함수
+  - 저장소(store) 생성
+  - App에는 하나의 저장소만 있어야한다.
+
+- `applyMiddleware`
+  - 여러개의 미들웨어가 조합시킬수 있다.
+
+* `Provider`
+
+  - `react-redux` 라이브러리에 내장되어있는, 리액트 앱에 store를 손쉽게 연동 할 수있도록 도와주는 컴포넌트
+
+  - `react` context를 구독하는 컴포넌트들에게 context의 변화를 알리는 역활
+
+### configure.js
+
+모듈화를 하는 이유??
+
+하나의 애플리케이션에서는 하나의 스토어밖에 없긴 하지만 예외의 케이스(서버쪽에서 각 요청이 처리될때 마다 스토어 생성)가 있기 때문에 스토어를 생성하는 함수를 이허게 모듈화를 합니다.
+
+> 👉 reducer의 단위 기준
+>
+> 화면단위 X, 기능단위 O
+> 데이터의 성격에 따라서 달라질 수 있겠지만 어떤 데이터는 여러 화면에서 공유하는 데이터 일 수도 있고 특정 화면에서만 사용하는 데이터 일 수도 있다. 화면이 복잡할 경우는 `Controller`기준으로 module을 분리하여 관리 하는게 좋다.
+>
+> 화면단위가 아닌 기능 단위로 reducer를 구성하였을때 local state를 우선 고려
+> 적절한 local state와 props를 통한 전달은 reducer가 비대해지는 것을 막아준다.
+> session storage에 저장하기 위한 값, 여러 화면에서 공유하는 화면 상태 값들만 reducer에서 별도로 관리를 진행
+
+### 리덕스 미들웨어
+
+[](https://i.imgur.com/31tvphE.png)
+
+리덕스 미들웨어를 사용하면 액션이 디스패치 된 다음, 리듀서에서 해당 액션을 받아와서 업데이트하기 전에 추가적인 작업을 할수 있습니다.
+
+미들웨어를 사용하는 주된 사용 용도는 비동기 작업을 처리
+
+### Rudux Observable and rxjs
+
+Rudux Observable 은 RxJS 기반의 Rudux Middleware.
+
+rxjs- API통신
+
+### redux-thunk
+
+redux-thunk는 리덕스에서 비동기 작업을 처리 할대 가장 많이 사용하는 미들웨어 입니다.
+
+[redux-observable vs redux-saga vs redux-thunk](https://www.npmtrends.com/redux-observable-vs-redux-saga-vs-redux-thunk)
+
+### redux-logger
+
+로거 미들웨어
+리듀서가 실행되기 전과 실행된 후를 log로 비교

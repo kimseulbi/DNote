@@ -42,40 +42,67 @@ python package 관리
 
 [설치도움받은 곳](https://dev-yakuza.posstree.com/ko/django/installation/)
 
-1. 가상환경을 만든다.
+1. [backend] 폴더에서 가상환경을 만든다.
 
 ```
 python3 -m venv myvenv
 ```
 
-2. 가상환경을 실행 시킨다.
+1. 가상환경을 실행 시킨다.
 
 ```
 source venv/bin/activate
 ```
 
-3. 가상환경에 장고를 설치
+1. 가상환경에 장고를 설치
 
 ```
 pip install django
 ```
 
-4. 장고 설치 버전 확인
+1. 장고 설치 버전 확인
 
 ```
 django-admin --version
 ```
 
-5. 개발 환경을 파일로 저장, 개발하면서 여러모듈 설치 완료후 명령어로 갱신
+1. dnote 프로젝트 생성 및 dnote로 이동
+
+```
+$ (venv) django-admin startproject dnote
+$ (venv) cd dnote
+
+```
+
+1. 마이그레이션 적용
+
+```
+$ (venv) ./manage.py migrate
+
+```
+
+1. 서버 실행
+
+```
+$ (venv) ./manage.py runserver
+```
+
+1. 개발 환경을 파일로 저장, 개발하면서 여러모듈 설치 완료후 명령어로 갱신
 
 ```
 pip freeze > requirements.txt
 ```
 
-6. 가상 환경(Virtual Environment)을 종료
+1. 가상 환경(Virtual Environment)을 종료
 
 ```
 deactivate
+```
+
+1. 가상서버 실행
+
+```
+source myvenv/bin/activate
 ```
 
 ## SASS
@@ -86,10 +113,15 @@ CSS 파일을 작성한다면 전혀 쓸 수 없었던 것을 Sass 문법을 통
 
 브라우저 중간에 껴서 일을 해주는 게 CSS 전처리기, Sass의 역할
 
+### classnames
+
+여러개의 클래스를 한번에 사용하게도 하고, scss와 bind하여 굳이 styles이름을 사용하지 않아도 되게 하는 라이브러리
+
 ## 리액트
 
 ### export default vs export
 
+[](https://lily-im.tistory.com/21)
 export default는 해당 모듈엔 대체가 하나만 있다, 하나만 내보낼때 사용, 개발자가 원하는 이름으로 import 할수 있다.
 
 export 배열, 상수, 클래스등 다수를 내보낼수 있다.
@@ -157,13 +189,26 @@ named export
 > 적절한 local state와 props를 통한 전달은 reducer가 비대해지는 것을 막아준다.
 > session storage에 저장하기 위한 값, 여러 화면에서 공유하는 화면 상태 값들만 reducer에서 별도로 관리를 진행
 
+### useSelector 최적화
+
 ### 리덕스 미들웨어
 
-[](https://i.imgur.com/31tvphE.png)
+![](https://redux-advanced.vlpt.us/images/redux-middleware.png)
 
 리덕스 미들웨어를 사용하면 액션이 디스패치 된 다음, 리듀서에서 해당 액션을 받아와서 업데이트하기 전에 추가적인 작업을 할수 있습니다.
 
 미들웨어를 사용하는 주된 사용 용도는 비동기 작업을 처리
+
+![](https://i.imgur.com/fZs5yvY.png)
+
+리덕스 스토어에는 여러 개의 미들웨어를 등록, 새로운 액션이 디스패치 되면 첫번째로 등록한 미들웨어가 호출, 만약 미들웨어에서 next(action)을 호출하게 되면 다음 미들웨어로 액션이 넘어갑니다. `store.dispath`를 사용하면 다른 액션을 추가적으로 발생
+
+-미들웨어를 직접 만들수 있지만 직접 만들게 되는 일은 거의 없습니다.
+
+### 미들웨어와 외부 데이터 연동
+
+외부데이터를 연동 하기 위해서 리덕스 미들웨어를 꼭 필요한것은 아닙니다.
+리액트 컴포넌트와 내부 state 만을 사용하여 모든 것을 들을 할수 있지만 리덕스에서 외부 데이터 연동 하기위해서는 미들웨어를 사용 하면 됩니다.
 
 ### Rudux Observable and rxjs
 
@@ -174,6 +219,7 @@ rxjs- API통신
 ### redux-thunk
 
 redux-thunk는 리덕스에서 비동기 작업을 처리 할대 가장 많이 사용하는 미들웨어 입니다.
+redux-thunk는 리덕스의 창시자인 Dan Abramov가 만들었으며, 리덕스 공식 매뉴얼에서도 비동기 작업을 처리하기 위하여 미들웨어를 사용하는 예시를 보여줍니다.
 
 [redux-observable vs redux-saga vs redux-thunk](https://www.npmtrends.com/redux-observable-vs-redux-saga-vs-redux-thunk)
 
